@@ -4,7 +4,7 @@ import sys
 import json
 import boto3
 
-context = json.loads(sys.stdin.read())
+context = json.loads(sys.stdin.read())['source']
 path = sys.argv[1]
 
 region     = context['region_name']
