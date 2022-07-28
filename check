@@ -1,0 +1,23 @@
+#/usr/bin/python3
+
+import sys
+import json
+import boto3
+
+context = json.loads(sys.stdin.read())
+
+region     = context['region_name']
+access_key = context['access_key']
+secret_key = context['secret_key']
+queue_url  = context['queue_url']
+
+client = boto3.client('sqs', region_name=region aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+
+response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=1, VisibilityTimeout=60)
+
+if response.has_key['Messages']:
+    message = reponse['Messages'][0]
+    print(json.dumps([{'ref': message['MessageId']}]))
+else:
+    print(json.dumps([]))
+
