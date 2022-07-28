@@ -19,7 +19,7 @@ response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=10, Vi
 if 'Messages' in response:
     message = response['Messages'][0]
     for key in message:
-        with open(path+'/'+key) as f:
+        with open(path+'/'+key, 'w') as f:
             f.write(message[key])
 
     client.delete_message(QueueUrl=queue_url, ReceiptHandle=message["ReceiptHandle"])
