@@ -12,7 +12,7 @@ access_key = context['access_key']
 secret_key = context['secret_key']
 queue_url  = context['queue_url']
 
-client = boto3.client('sqs', region_name=region aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+client = boto3.client('sqs', region_name=region, aws_access_key_id=access_key, aws_secret_access_key=secret_key)
 
 response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=10, VisibilityTimeout=60)
 
