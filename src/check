@@ -16,7 +16,7 @@ client = boto3.client('sqs', region_name=region, aws_access_key_id=access_key, a
 response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=1, VisibilityTimeout=60)
 
 if 'Messages' in response:
-    message = reponse['Messages'][0]
+    message = response['Messages'][0]
     print(json.dumps([{'ref': message['MessageId']}]))
 else:
     print(json.dumps([]))
