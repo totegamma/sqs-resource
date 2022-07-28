@@ -23,7 +23,7 @@ if 'Messages' in response:
             f.write(message[key])
 
     client.delete_message(QueueUrl=queue_url, ReceiptHandle=message["ReceiptHandle"])
-    print(json.dumps([{'ref': message['MessageId']}]))
+    print(json.dumps({"version": {'ref': message['MessageId']}}))
 else:
     print(json.dumps([]))
 
