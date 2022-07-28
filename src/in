@@ -16,7 +16,7 @@ client = boto3.client('sqs', region_name=region, aws_access_key_id=access_key, a
 
 response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=10, VisibilityTimeout=60)
 
-if response.has_key('Messages'):
+if 'Messages' in response.has_key:
     message = reponse['Messages'][0]
     for key in message:
         with open(path+'/'+key) as f:
