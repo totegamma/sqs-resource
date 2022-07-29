@@ -17,7 +17,7 @@ response = client.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=10, Vi
 
 if 'Messages' in response:
     messages = response['Messages']
-    print(json.dumps(map(lambda x: {'ref': x['MessageId']}, messages)))
+    print(json.dumps(list(map(lambda x: {'ref': x['MessageId']}, messages))))
 else:
     print(json.dumps([]))
 
