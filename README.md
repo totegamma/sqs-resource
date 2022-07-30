@@ -8,13 +8,53 @@ A Concourse resource for AWS SQS.
 - `secret_key`: *Required.* aws secret access key
 - `queue_url`: *Required.* your SQS's URL
 
-## Behaviour
+## Example
+```yaml
+resource_types:
+  - name: sqs-resource
+    type: docker-image
+    source:
+      repository: ghcr.io/totegamma/sqs-resource
+      tag: master
 
+resources:
+  - name: mysqs
+    type: sqs-resource
+    icon: aws
+    source:
+      region_name: 'YOUR_REGION'
+      access_key: 'YOUR_AWS_ACCESS_KEY'
+      secret_key: 'YOUR_AWS_SECRET_KEY'
+      queue_url: 'YOUR_SQS_QUEUE_URL'
+
+jobs:
+  - name: printoutInput
+    plan:
+      - get: mysqs
+        trigger: true
+      - task: printoutInput
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: {repository: busybox}
+          inputs:
+            - name: mysqs
+          run:
+            path: sh
+            args:
+              - -cex
+              - |
+                ls mysqs
+                cat mysqs/Body
+```
+
+## Behaviour
 ### `check`:
-receive\_message but no delete.
+try to receive 1 message with VisibilityTimeout=0
 
 ### `in`:
-receive\_message and delete.
+receive 1 message with VisibilityTimeout=60 and delete
 
 ### `out`:
 post\_message.
