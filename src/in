@@ -25,5 +25,5 @@ if 'Messages' in response:
     client.delete_message(QueueUrl=queue_url, ReceiptHandle=message["ReceiptHandle"])
     print(json.dumps({"version": {'ref': message['MessageId']}}))
 else:
-    print(json.dumps([]))
+    print(json.dumps({"version": {'ref': []}}))
 
